@@ -10,13 +10,14 @@ ShellRoot {
   id: root
 
   // Edge assets (adjust to your paths)
-  property url topSrc:    Qt.resolvedUrl("./assets/top.svg")
-  property url bottomSrc: Qt.resolvedUrl("./assets/bottom.svg")
-  property url leftSrc:   Qt.resolvedUrl("./assets/left.svg")
-  property url rightSrc:  Qt.resolvedUrl("./assets/right.svg")
+  property url topSrc:    Qt.resolvedUrl("./assets/top.png")
+  property url bottomSrc: Qt.resolvedUrl("./assets/bottom.png")
+  property url leftSrc:   Qt.resolvedUrl("./assets/left.png")
+  property url rightSrc:  Qt.resolvedUrl("./assets/right.png")
 
   // 1) Edge reservation + (optional) drawing
   EdgeOverlayLayout {
+    id: edgeLayout
     thickness: 64
     enableTop: true; enableBottom: true; enableLeft: true; enableRight: true
     topSource: topSrc; bottomSource: bottomSrc; leftSource: leftSrc; rightSource: rightSrc
@@ -26,14 +27,14 @@ ShellRoot {
   // 2) Overlay (HUD + panel inside HUD rectangle)
   PanelWindow {
 
-    property int leftMargin:-32
+    property int leftMargin:-56
 
     id: hudWin
-    color: "transparent"
+    color: "transparent"//'#38ffffff'
     mask: Region {}                     // click-through
     // Pick your edge and size; example shows right edge full-height.
     anchors { left: true; top: true; bottom: true }
-    implicitWidth: 850
+    implicitWidth: 880
     implicitHeight: 1500
     // CRITICAL: do not reserve; overlap other reserved panels
     exclusiveZone: 0 
@@ -44,7 +45,8 @@ ShellRoot {
     Component.onCompleted: {
     if (hudWin.WlrLayershell) hudWin.WlrLayershell.layer = WlrLayer.Overlay
     }
-    margins{ left:leftMargin;top:-16;bottom:-16}
+    margins{ left:leftMargin;bottom:14}
+    
     HudSquares {
       id: hud
       anchors.fill: parent
@@ -53,9 +55,11 @@ ShellRoot {
       command: "/home/nihil/Extra/chatgpt-electron/toggle.sh"
       // Geometry (tune as needed)
       s: 8
-      rectW: 800
-      rectH: 1278
-      shiftX: 356
+      rectW: 804
+      rectH: 1280
+      shiftX: 380
     }
+
+    
   }
 }

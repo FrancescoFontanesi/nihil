@@ -2,7 +2,7 @@
 import QtQuick 2.15
 import Quickshell
 import Quickshell.Wayland
-
+import "../widgets"
 
 // Layout: 4 PanelWindow ai bordi (32px) che mostrano PNG con reveal.
 Item {
@@ -36,13 +36,22 @@ Item {
         id: topPanel
         visible: api.enableTop && !!api.topSource
         anchors { top: true; left: true; right: true }
-        margins { top:-2; left: -api.thickness +2 ; right: -api.thickness+2 }
-        implicitHeight: api.thickness 
+        margins { top:8; left: -api.thickness -7  ; right: -api.thickness -7 }
+        implicitHeight: api.thickness - 10
         exclusiveZone: api.thickness
         aboveWindows:true
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
         property bool drawContent: false // <— per questo fix: false
+
+        ClockAndCalendar {
+            anchors.top: parent.top
+            anchors.margins: {bottom: -12}
+            s: 6
+            rectH:40
+            rectW:342
+        }
+
 
 
         EdgeStrip {
@@ -60,13 +69,29 @@ Item {
         id: bottomPanel
         visible: api.enableBottom && !!api.bottomSource
         anchors { bottom: true; left: true; right: true }
-        margins { top:-2; left: -api.thickness +2 ; right: -api.thickness+2 }
+        margins { top:8; left: -api.thickness -7 ; right: -api.thickness-7 }
         implicitHeight: api.thickness 
         exclusiveZone: api.thickness
         aboveWindows:true
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
         property bool drawContent: false // <— per questo fix: false
+
+    
+        HudBattery {
+            id: battery
+            anchors.centerIn: parent
+            anchors.bottom: parent.bottom
+            anchors.margins: {top: -16}
+            barWidth: 340
+            barHeight: 32
+            segments: barWidth / 12
+            gap: 4
+            radius: 8
+            textColor: "#ffffff"
+        }
+        
+        
 
 
 
@@ -85,8 +110,8 @@ Item {
         id: leftPanel
         visible: api.enableLeft && !!api.leftSource
         anchors { left: true; top: true; bottom: true }
-        margins {left:-20; top: -api.thickness*0.2; bottom: -api.thickness*0.2;  }
-        implicitWidth: api.thickness +32
+        margins {left:10; top: -api.thickness*0.2; bottom: -api.thickness*0.2;  }
+        implicitWidth: api.thickness 
         exclusiveZone: api.thickness
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
@@ -110,8 +135,8 @@ Item {
         id: rightPanel
         visible: api.enableRight && !!api.rightSource
         anchors { right: true; top: true; bottom: true }
-        margins {right:-20; top: -api.thickness*0.2; bottom: -api.thickness*0.2;  }
-        implicitWidth: api.thickness + 32
+        margins {top: -api.thickness*0.2; bottom: -api.thickness*0.2; right:10; }
+        implicitWidth: api.thickness 
         exclusiveZone: api.thickness
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
