@@ -36,20 +36,26 @@ Item {
         id: topPanel
         visible: api.enableTop && !!api.topSource
         anchors { top: true; left: true; right: true }
-        margins { top:8; left: -api.thickness -7  ; right: -api.thickness -7 }
-        implicitHeight: api.thickness - 10
+        margins { top:-8; left: -api.thickness -8  ; right: -api.thickness -8 }
+        implicitHeight: api.thickness 
         exclusiveZone: api.thickness
         aboveWindows:true
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
         property bool drawContent: false // <— per questo fix: false
 
-        ClockAndCalendar {
+        HudClock {
             anchors.top: parent.top
-            anchors.margins: {bottom: -12}
+            anchors.margins: {bottom: -6}
             s: 6
             rectH:40
-            rectW:342
+            rectW:344
+        }
+
+        HudWorkSpaces {
+            x: parent.width/2 - 490
+            groupSpacing: parent.width/2 
+            y: 14
         }
 
 
@@ -59,8 +65,7 @@ Item {
             edge: "top"
             source: api.topSource
             fillMode: api.fillMode
-            autoShow: api.autoShow
-            autoShowDelay: api.autoShowDelay
+             
         }
     }
 
@@ -69,7 +74,7 @@ Item {
         id: bottomPanel
         visible: api.enableBottom && !!api.bottomSource
         anchors { bottom: true; left: true; right: true }
-        margins { top:8; left: -api.thickness -7 ; right: -api.thickness-7 }
+        margins { bottom:-8; left: -api.thickness -7 ; right: -api.thickness-7 }
         implicitHeight: api.thickness 
         exclusiveZone: api.thickness
         aboveWindows:true
@@ -81,15 +86,38 @@ Item {
         HudBattery {
             id: battery
             anchors.centerIn: parent
-            anchors.bottom: parent.bottom
-            anchors.margins: {top: -16}
             barWidth: 340
             barHeight: 32
             segments: barWidth / 12
             gap: 4
             radius: 8
-            textColor: "#ffffff"
         }
+
+        HudVolumeBar {
+            id: volume
+            s:4
+            x: parent.width/2 +240
+            y:-10
+            iconSize: 24
+            rectW: 260
+            rectH: 24
+            showLines: true
+            hudColorDim: "#80ffffff"
+        }
+
+        HudbrightnessBar {
+            id: brightness
+            s:4
+            x: parent.width/2 - 510
+            y:-10
+            iconSize: 24
+            rectW: 260
+            rectH: 24
+            showLines: true
+            hudColorDim: "#80ffffff"
+        }
+
+        
         
         
 
@@ -100,8 +128,7 @@ Item {
             edge: "bottom"
             source: api.bottomSource
             fillMode: api.fillMode
-            autoShow: api.autoShow
-            autoShowDelay: api.autoShowDelay
+             
         }
     }
 
@@ -110,14 +137,14 @@ Item {
         id: leftPanel
         visible: api.enableLeft && !!api.leftSource
         anchors { left: true; top: true; bottom: true }
-        margins {left:10; top: -api.thickness*0.2; bottom: -api.thickness*0.2;  }
-        implicitWidth: api.thickness 
-        exclusiveZone: api.thickness
+        margins {left:-2; top: -api.thickness*0.3; bottom: -api.thickness*0.3;  }
+        implicitWidth: api.thickness +8
+        exclusiveZone: api.thickness +3
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
         aboveWindows:true
         exclusionMode: ExclusionMode.Ignore
-        property bool drawContent: false // <— per questo fix: false
+        property bool drawContent: false 
 
 
         EdgeStrip {
@@ -125,8 +152,6 @@ Item {
             edge: "left"
             source: api.leftSource
             fillMode: api.fillMode
-            autoShow: api.autoShow
-            autoShowDelay: api.autoShowDelay
         }
     }
 
@@ -135,12 +160,12 @@ Item {
         id: rightPanel
         visible: api.enableRight && !!api.rightSource
         anchors { right: true; top: true; bottom: true }
-        margins {top: -api.thickness*0.2; bottom: -api.thickness*0.2; right:10; }
-        implicitWidth: api.thickness 
-        exclusiveZone: api.thickness
+        margins {top: -api.thickness*0.3; bottom: -api.thickness*0.3; right:-2; }
+        implicitWidth: api.thickness +8
+        exclusiveZone: api.thickness +3
         mask: Region {}                    // nessuna area “cliccabile” → click-through
         color: "transparent"
-        aboveWindows:false
+        aboveWindows:true
         property bool drawContent: false // <— per questo fix: false
 
 
@@ -149,8 +174,7 @@ Item {
             edge: "right"
             source: api.rightSource
             fillMode: api.fillMode
-            autoShow: api.autoShow
-            autoShowDelay: api.autoShowDelay
+             
         }
     }
 }

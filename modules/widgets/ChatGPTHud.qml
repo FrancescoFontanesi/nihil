@@ -25,6 +25,7 @@ Item {
     property real offsetX: initX
     property int initY: Math.round((height - (2*s)) / 2)
     property int finalY: Math.round((height - rectH) / 2)
+    
 
     // Stile
     property color hudColor: "#ffffff"
@@ -65,8 +66,8 @@ Item {
         function onFocusedWorkspaceChanged() {
             if (toDeploy.running || toUndeploy.running) return
             if (root.visualOpen) {
-                // chiudi UI: contract + slide back
                 toUndeploy.start()
+                toggleAppOnce()
             }
         }
     }
@@ -99,7 +100,7 @@ Item {
         id: nodes
         model: 4
         delegate: Rectangle {
-            width: s; height: s; radius: 2; color: hudColor
+            width: s; height: s; radius: 0; color: hudColor
             property bool isBottom: index >= 2
             property bool isRight: (index % 2) === 1
             property int  stagIndex: visualOpen ? index : (3 - index)
@@ -168,7 +169,8 @@ Item {
         var now = Date.now()
         if (now - _lastToggleMs < cmdDebounceMs) return
         _lastToggleMs = now
-        if (command && command.length) Quickshell.execDetached([command])
+        console.log("Toggling app via command:", command + "--toggle")
+        if (command && command.length) Quickshell.execDetached([command, "--toggle"])
         else console.warn("toggle command not set")
     }
 }

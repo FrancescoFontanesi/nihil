@@ -21,17 +21,16 @@ Item {
     property int indicatorPadding: 12
     property int indicatorNodeSize: 10
     property bool showIndicator: true
-    property int pollInterval: 800
+    property int pollInterval: 100
     property int indicatorAnimDuration: 200
 
-    property color emptyColor: "#000000"
+    property color emptyColor: '#6e000000'
     property color emptyTextColor: "#ffffff"
-    property color occupiedColor: "#ffffff"
+    property color occupiedColor: '#c5ffffff'
     property color occupiedTextColor: "#000000"
-    property color workspaceBorderColor: "#ffffff"
     property int workspaceBorderWidth: 2
     property int workspaceActiveBorderWidth: 4
-    property real workspaceCornerRadius: 12
+    property real workspaceCornerRadius: 10
 
     property color indicatorNodeColor: "#ffffff"
     property color indicatorOutlineColor: "#80ffffff"
@@ -282,6 +281,7 @@ Item {
             y: verticalPadding
             width: layoutWidth
             height: layoutHeight
+            antialiasing:true
 
             Repeater {
                 id: workspaceRepeater
@@ -302,9 +302,11 @@ Item {
                         anchors.fill: parent
                         radius: root.workspaceCornerRadius
                         color: isOccupied ? root.occupiedColor : root.emptyColor
-                        border.color: root.workspaceBorderColor
+                        border.color: isOccupied ? root.emptyColor : root.occupiedColor
                         border.width: isActive ? root.workspaceActiveBorderWidth : root.workspaceBorderWidth
                         antialiasing: true
+                         Behavior on color { ColorAnimation { duration: 220; easing.type: Easing.OutCubic } }
+
                     }
 
                     Text {
@@ -313,9 +315,12 @@ Item {
                         color: isOccupied ? root.occupiedTextColor : root.emptyTextColor
                         font.pixelSize: Math.round(Math.min(root.workspaceWidth, root.workspaceHeight) * 0.42)
                         font.weight: Font.DemiBold
+                        font.family: "Radjhani"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        renderType: Text.NativeRendering
+                        renderType: Text.QtRendering
+                        Behavior on color { ColorAnimation { duration: 220; easing.type: Easing.OutCubic } }
+
                     }
                 }
             }

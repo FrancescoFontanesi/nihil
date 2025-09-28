@@ -19,10 +19,7 @@ Item {
     property bool charging: false
 
     function levelColor(p) {
-        if (charging) return "#c3e9ff" // azzurrino in carica
-        if (p >= 65) return "#ffffff"  // bianco pieno
-        if (p >= 35) return "#ffffff"
-        if (p >= 20) return "#ff0000"
+        if (p <= 10) return "#ff0000"
         return "#ffffff"              // rosso
     }
 
@@ -89,25 +86,14 @@ Item {
                 }
             }
         }
-
-        // “tappo” batteria a destra
-        Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            width: 6; height: barHeight * 0.55
-            radius: 3
-            x: parent.width + 2
-            color: frameColor
-        }
     }
 
     // testo percentuale
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: frame.bottom
-        anchors.topMargin: 6
         text: (charging ? "+" : "") + root.percent + "%"
         color: textColor
-        font.pixelSize: 12
+        font.pixelSize: 14
     }
 }

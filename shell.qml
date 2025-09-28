@@ -47,19 +47,54 @@ ShellRoot {
     }
     margins{ left:leftMargin;bottom:14}
     
-    HudSquares {
+    ChatGPTHud {
       id: hud
       anchors.fill: parent
       panelWindow: hudWin
       focus: false
-      command: "/home/nihil/Extra/chatgpt-electron/toggle.sh"
+      command: "/home/nihil/Extra/Chatgpt-PyGObject/chatgpt-wrapper"
       // Geometry (tune as needed)
       s: 8
-      rectW: 804
-      rectH: 1280
+      rectW: 808
+      rectH: 1300
       shiftX: 380
     }
+  }
+
+  PanelWindow {
+    property int rightMargin: -72
+    property var maskRegion: Region {}
+    property bool clickThrough: true   
+    id: hudLock
+    color: "transparent"
+    anchors { right: true; top: true; bottom: true }
+    implicitWidth: 260
+    implicitHeight: 600
+    exclusiveZone: 0
+    exclusionMode: ExclusionMode.Ignore
+    aboveWindows: true
+    Component.onCompleted: {
+      if (hudLock.WlrLayershell) hudLock.WlrLayershell.layer = WlrLayer.Overlay 
+    }
+    margins { right: rightMargin; bottom: 14 }
 
     
+
+    LockHud {                 // <-- usa il nuovo file
+      id: lockHud
+      anchors.fill: parent
+      panelWindow: hudLock            // <-- usa il suo panel
+      s: 8
+      rectW: 180
+      rectH: 600
+      shiftX: 80        
+      initX: 214      // <-- offset iniziale per tenerlo fuori schermo     
+    }
+    
+    mask : clickThrough ? maskRegion : null  // <-- usa la proprietà clickThrough di LockHudp         
+
   }
+
+
+
 }
