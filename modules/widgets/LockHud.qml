@@ -18,9 +18,9 @@ Item {
     property int gap: 12
     property int rectW: 700
     property int rectH: 1264
-    property int shiftX: 356                 // ampiezza slide (positiva)
-    property int initX: 0                    // base X iniziale del cluster compatto
-    property real offsetX: 0                 // 0..shiftX durante lo slide
+    property int shiftX: 356                 
+    property int initX: 0                    
+    property real offsetX: 0                 
     property int initY: Math.round((height - (2*s)) / 2)
     property int finalY: Math.round((height - rectH) / 2)
 
@@ -37,13 +37,11 @@ Item {
     property int expandTotal: (stagger ? 3 * staggerStep : 0) + animDur
 
     // Stato UI/animazione
-    property bool visualOpen: false         // solo UI (nodi agli angoli)
-    property bool expandPhase: true         // abilita i Behavior su x/y
+    property bool visualOpen: false         
+    property bool expandPhase: true         
 
-    // Margine destro sicuro (se esiste)
     property int rightMargin: panelWindow && panelWindow.rightMargin !== undefined ? panelWindow.rightMargin : 0
 
-    // Base X del rettangolo aperto (ancorato a destra, 6px di margine)
     readonly property int baseOpenLeft: (width - 6 - rectW + rightMargin)
 
     // ======== HOTKEY: toggle (solo HUD) ========
@@ -68,7 +66,6 @@ Item {
     }
 
     // ======== ANIMATIONS ========
-    // OPEN: slide compatto (offsetX: 0→shiftX) da destra verso sinistra → poi expand angoli
     SequentialAnimation {
         id: toDeployLock
         ScriptAction { script: { lock.expandPhase = false; lock.visualOpen = false; lock.offsetX = 0; panelWindow.clickThrough = false; } }
@@ -77,7 +74,6 @@ Item {
         onStopped: updateExclusiveZone()
     }
 
-    // CLOSE: contract (angoli→compatto) → slide back (offsetX: shiftX→0)
     SequentialAnimation {
         id: toUndeployLock
         ScriptAction { script: { lock.expandPhase = true; lock.visualOpen = false } }
@@ -99,9 +95,7 @@ Item {
             property bool isRight : (index % 2) === 1
             property int  stagIndex: visualOpen ? index : (3 - index)
 
-            // Posizioni:
-            // - OPEN: agli angoli del rettangolo finale (ancorato a destra)
-            // - CLOSED/SLIDE: cluster compatto basato su initX e scorrimento verso sinistra (initX - offsetX)
+            
             x: visualOpen
                ? (baseOpenLeft + (isRight ? (rectW - s) : 0))
                : (initX - offsetX + (isRight ? (s + gap) : 0))
@@ -110,7 +104,6 @@ Item {
                ? (finalY + (isBottom ? (rectH - s) : 0))
                : (initY  + (isBottom ? (s + gap) : 0))
 
-            // Animazioni di contract/expand (non durante lo slide)
             Behavior on x {
                 enabled: expandPhase
                 SequentialAnimation {
@@ -145,13 +138,13 @@ Item {
 
         HudLockButton {
             id: lockActions
-            x: baseOpenLeft  -4    // for right-side HUD; for left HUD use your left-anchored x
+            x: baseOpenLeft  -4    
             y: finalY - 300
             width: rectW
             height: rectH
             iconSize: 120
             opacity: lock.visualOpen ? 1 : 0
-            visible: lock.visualOpen || opacity > 0.001   // resta visibile durante il fade-out
+            visible: lock.visualOpen || opacity > 0.001   
             Behavior on opacity { NumberAnimation { duration: 1000; easing.type: Easing.OutCubic}}
         }
     }

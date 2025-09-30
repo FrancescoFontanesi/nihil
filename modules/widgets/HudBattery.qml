@@ -20,11 +20,11 @@ Item {
 
     function levelColor(p) {
         if (p <= 10) return "#ff0000"
-        return "#ffffff"              // rosso
+        return "#ffffff"              
     }
 
     Timer {
-        interval: 150000   // 5 minuti
+        interval: 1000   
         running: true
         repeat: true
         triggeredOnStart: true

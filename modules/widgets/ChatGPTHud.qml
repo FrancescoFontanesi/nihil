@@ -13,7 +13,7 @@ Item {
 
     // ======== PARAMS / STATE ========
     property PanelWindow panelWindow
-    property string command: ""          // percorso assoluto a toggle.sh
+    property string command: ""          
 
     // Geometria
     property int s: 12
@@ -40,9 +40,9 @@ Item {
     property int expandTotal: (stagger ? 3 * staggerStep : 0) + animDur
 
     // Stato UI/animazione
-    property bool visualOpen: false   // solo UI (nodi agli angoli)
-    property bool sliding: false      // vero solo durante lo slide orizzontale
-    property bool expandPhase: true   // abilita i Behavior su x/y
+    property bool visualOpen: false   
+    property bool sliding: false      
+    property bool expandPhase: true   
     property int leftMargin: panelWindow ? panelWindow.leftMargin : 0
 
     // ======== HOTKEY: toggle sincronizzato ========
@@ -73,7 +73,6 @@ Item {
     }
 
     // ======== ANIMATIONS ========
-    // OPEN: slide compatto (initX -> initX+shiftX) → poi expand ai 4 angoli
     SequentialAnimation {
         id: toDeploy
         ScriptAction { script: { root.sliding = true; root.expandPhase = false; root.visualOpen = false } }
@@ -82,13 +81,10 @@ Item {
         onStopped: updateExclusiveZone()
     }
 
-    // CLOSE: contract ai compatti (a x=offsetX) → poi slide back (initX+shiftX -> initX)
     SequentialAnimation {
         id: toUndeploy
-        // 1) contract (x/y animati via Behavior perché expandPhase=true)
         ScriptAction { script: { root.expandPhase = true; root.visualOpen = false } }
         PauseAnimation { duration: expandTotal }
-        // 2) slide back
         ScriptAction { script: { root.sliding = true; root.expandPhase = false } }
         NumberAnimation { target: root; property: "offsetX"; from: initX + shiftX; to: initX; duration: 220; easing.type: Easing.InOutCubic }
         ScriptAction { script: { root.sliding = false; root.expandPhase = true } }
@@ -105,9 +101,6 @@ Item {
             property bool isRight: (index % 2) === 1
             property int  stagIndex: visualOpen ? index : (3 - index)
 
-            // Posizioni:
-            // - se visualOpen: agli angoli del rettangolo finale
-            // - altrimenti: compatti, sempre basati su offsetX (così slide/idle coincidono)
             x: visualOpen
                ? ((6-leftMargin) + (isRight ? (rectW - s) : 0))
                : (offsetX + (isRight ? (s + gap) : 0))
@@ -116,7 +109,6 @@ Item {
                ? (4+finalY + (isBottom ? (rectH - s) : 0))
                : (initY  + (isBottom ? (s + gap) : 0))
 
-            // Animazioni di contract/expand solo quando expandPhase è attivo
             Behavior on x {
                 enabled: expandPhase
                 SequentialAnimation {
@@ -164,7 +156,7 @@ Item {
 
     // ======== APP TOGGLE (debounced) ========
     property double _lastToggleMs: 0
-    property int cmdDebounceMs: 300   // leggermente più alto per sicurezza
+    property int cmdDebounceMs: 300   
     function toggleAppOnce() {
         var now = Date.now()
         if (now - _lastToggleMs < cmdDebounceMs) return

@@ -21,7 +21,7 @@ Item {
     property var  volumeCmd: ["bash","-lc","wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{m=$0; v=$2; gsub(/Volume:/,\"\",v); printf \"%d %s\\n\", v*100, (index(m,\"MUTED\")?\"muted\":\"on\") }'"]
 
     // Icon properties
-    property url iconSource: Qt.resolvedUrl("../../assets/volume.png")   // se vuoto, non appare
+    property url iconSource: Qt.resolvedUrl("../../assets/volume.png")   
     property int iconSize: 24
     property color iconTint: "#ffffff"
 

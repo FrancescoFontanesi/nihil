@@ -7,7 +7,7 @@ Custom Quickshell configuration that builds a layered HUD for Hyprland. It rende
 - Hyprland (for layer shell integration and `hyprctl` commands)
 - PipeWire wireplumber (`wpctl`) for volume polling
 - Helper scripts in `scripts/` (battery JSON emitter and brightness writers); keep them executable and adjust device names as needed.
-- External ChatGPT wrapper that can be found on my profile
+- External ChatGPT wrapper that can be found on my profile, as a wrapper the embedded site can be changed to match user's preference
 
 ## Runtime Behavior
 - Edge overlays reserve space and draw PNG borders on every screen edge while still allowing windows to slide underneath.

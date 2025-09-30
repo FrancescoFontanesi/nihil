@@ -6,27 +6,26 @@ Item {
     focus: false
 
     // --- Geometry / style ---
-    property int  s: 12                 // node size
-    property int  gap: 12               // gap in compact form
-    property int  rectW: 420            // width of the rectangle
-    property int  rectH: 80             // height of the rectangle
-    property int  topMargin: 24         // distance from top edge
+    property int  s: 12                 
+    property int  gap: 12               
+    property int  rectW: 420            
+    property int  rectH: 80             
+    property int  topMargin: 24         
     property color hudColor: "#ffffff"
     property color hudColorDim: "#80ffffff"
 
     // Derived positions
-    readonly property int cx: Math.round((width - rectW) / 2) // centered x
+    readonly property int cx: Math.round((width - rectW) / 2) 
     readonly property int yTop: topMargin
 
     // --- Time & Date (locale) ---
     property string timeText: Qt.formatTime(new Date(), "HH:mm")
-    property string dateText: Qt.locale().toString(new Date(), "ddd dd MMM") // es: lun 23 set
+    property string dateText: Qt.locale().toString(new Date(), "ddd dd MMM") 
 
     Timer {
         interval: 1000; running: true; repeat: true; triggeredOnStart: true
         onTriggered: {
             timeText = Qt.formatTime(new Date(), "HH:mm")
-            // aggiorno anche la data: costa pochissimo e gestisce il cambio giorno
             dateText = Qt.locale().toString(new Date(), "ddd dd MMM")
         }
     }

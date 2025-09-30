@@ -4,7 +4,7 @@ import Quickshell
 import Quickshell.Wayland
 import "../widgets"
 
-// Layout: 4 PanelWindow ai bordi (32px) che mostrano PNG con reveal.
+
 Item {
     id: api
 
@@ -19,7 +19,7 @@ Item {
 
     // Rendering
     property int fillMode: Image.Stretch
-    property bool drawContent: false // <— per questo fix: false
+    property bool drawContent: false 
 
     // Toggle lati
     property bool enableTop: true
@@ -40,9 +40,9 @@ Item {
         implicitHeight: api.thickness 
         exclusiveZone: api.thickness
         aboveWindows:true
-        mask: Region {}                    // nessuna area “cliccabile” → click-through
+        mask: Region {}                    
         color: "transparent"
-        property bool drawContent: false // <— per questo fix: false
+        property bool drawContent: false 
 
         HudClock {
             anchors.top: parent.top
@@ -78,9 +78,9 @@ Item {
         implicitHeight: api.thickness 
         exclusiveZone: api.thickness
         aboveWindows:true
-        mask: Region {}                    // nessuna area “cliccabile” → click-through
+        mask: Region {}                    
         color: "transparent"
-        property bool drawContent: false // <— per questo fix: false
+        property bool drawContent: false 
 
     
         HudBattery {
@@ -140,7 +140,7 @@ Item {
         margins {left:-2; top: -api.thickness*0.3; bottom: -api.thickness*0.3;  }
         implicitWidth: api.thickness +8
         exclusiveZone: api.thickness +3
-        mask: Region {}                    // nessuna area “cliccabile” → click-through
+        mask: Region {}                    
         color: "transparent"
         aboveWindows:true
         exclusionMode: ExclusionMode.Ignore
@@ -163,10 +163,10 @@ Item {
         margins {top: -api.thickness*0.3; bottom: -api.thickness*0.3; right:-2; }
         implicitWidth: api.thickness +8
         exclusiveZone: api.thickness +3
-        mask: Region {}                    // nessuna area “cliccabile” → click-through
+        mask: Region {}                    
         color: "transparent"
         aboveWindows:true
-        property bool drawContent: false // <— per questo fix: false
+        property bool drawContent: false 
 
 
         EdgeStrip {

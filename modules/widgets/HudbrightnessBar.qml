@@ -21,7 +21,7 @@ Item {
 
 
     // ---- Icon ----
-    property url iconSource: Qt.resolvedUrl("../../assets/brightness.png")   // se vuoto, non appare
+    property url iconSource: Qt.resolvedUrl("../../assets/brightness.png")   
     property int iconSize: 24
     property color iconTint: "#ffffff"
     property int percent: 0   // 0-100
@@ -102,13 +102,10 @@ Item {
         border.width: 2
 
         Rectangle {
-            // We use anchors.left and anchors.verticalCenter for positioning
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            // Margins are the key to creating the gap
             anchors.leftMargin: 6
             anchors.rightMargin: 6
-            // The height and width calculations are updated to use the full parent size
             height: Math.max(parent.height - (anchors.verticalCenterOffset * 2), 4)
             width: Math.max(0, Math.round((parent.width - anchors.leftMargin - anchors.rightMargin) * root.percent / 100))
             radius: 8

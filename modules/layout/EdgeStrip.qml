@@ -1,7 +1,7 @@
 
 import QtQuick 2.15
 
-// Edge strip semplificato: mostra un PNG con reveal da bordo.
+
 Item {
     id: root
 
