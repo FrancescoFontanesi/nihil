@@ -9,7 +9,7 @@ Item {
     property var  items: [
         { icon: Qt.resolvedUrl("../../assets/reboot.png"),   cmd: ["systemctl","reboot"] },
         { icon: Qt.resolvedUrl("../../assets/shutdown.png"), cmd: ["systemctl","poweroff"] },
-        { icon: Qt.resolvedUrl("../../assets/lock.png"),     cmd: ["loginctl", "lock-session"] }
+        { icon: Qt.resolvedUrl("../../assets/lock.png"),     cmd: ["systemctl", "suspend"] }
     ]
 
     readonly property int _count: (items && items.length) ? items.length : 0
@@ -59,6 +59,7 @@ Item {
                     }
                     onClicked: {
                         if (modelData.cmd && modelData.cmd.length)
+                            toUndeployLock.start()
                             Quickshell.execDetached(modelData.cmd)
                     }
                 }
